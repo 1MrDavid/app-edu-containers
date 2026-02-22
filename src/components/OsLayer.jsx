@@ -2,11 +2,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Info, Cpu, Settings, Terminal, LayoutTemplate } from 'lucide-react';
 
-export default function OsLayers() {
-  const [activeLayer, setActiveLayer] = useState(null);
-
-  // Ordenamos de mayor a menor radio para que los círculos grandes
-  // se dibujen primero en el SVG y queden por detrás de los pequeños.
   const layers = [
     { 
       id: 'user', r: 160, bg: '#f8fafc', border: '#e2e8f0', text: '#64748b', 
@@ -34,108 +29,90 @@ export default function OsLayers() {
     }
   ];
 
-  return (
-    <div className="w-full min-h-screen bg-slate-50 flex items-center justify-center p-8 font-sans">
-      <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-12">
-        
-        {/* COLUMNA IZQUIERDA: TEXTOS Y TARJETAS */}
-        <div className="flex-1 space-y-6">
-          <div>
-            <h2 className="text-4xl font-extrabold text-slate-900 mb-4 leading-tight">
-              Capas del <span className="text-blue-600">Sistema Operativo</span>
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              Para entender cómo funcionan los contenedores, primero debemos diseccionar la arquitectura de un Sistema Operativo (SO) tradicional. Un SO actúa como intermediario entre el hardware y los programas del usuario.
-            </p>
-          </div>
+// ... (mismos imports y definición de layers)
 
-          <div className="space-y-4 mt-8">
-            <h3 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-4">
-              Componentes Clave
-            </h3>
-            {/* Renderizamos las tarjetas de las capas invirtiendo el array para mostrar HW primero */}
-            {[...layers].reverse().map((l) => (
+export default function OsLayers() {
+  const [activeLayer, setActiveLayer] = useState(null);
+
+  return (
+    // CAMBIO: Eliminamos min-h-screen y p-8. Usamos h-full para llenar el slot de Astro.
+    <div className="w-full h-full flex items-center justify-center font-sans">
+      <div className="w-full flex flex-col lg:flex-row items-center gap-8">
+        
+        {/* COLUMNA IZQUIERDA: TEXTO DINÁMICO */}
+        <div className="flex-1 space-y-4">
+          <div className="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest">
+            <span className="w-6 h-[2px] bg-blue-600"></span>
+            Módulo 01: Fundamentos
+          </div>
+          <h2 className="text-4xl font-black text-slate-900 leading-tight">
+            Capas del <br/><span className="text-blue-600">Sistema Operativo</span>
+          </h2>
+          <p className="text-slate-500 text-sm leading-relaxed max-w-sm">
+            Interactúa con el diagrama para explorar cómo se organiza el software antes de llegar al silicio.
+          </p>
+          
+          {/* Pequeño detalle: leyenda de colores que cambian según el hover */}
+          <div className="pt-4 space-y-2">
+            {layers.map((l) => (
               <div 
-                key={`card-${l.id}`} 
-                className="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-100 shadow-sm transition-all hover:shadow-md"
+                key={l.id}
                 onMouseEnter={() => setActiveLayer(l)}
-                onMouseLeave={() => setActiveLayer(null)}
+                className={`flex items-center gap-3 p-2 rounded-lg transition-all cursor-pointer ${activeLayer?.id === l.id ? 'bg-white shadow-sm ring-1 ring-slate-200' : 'opacity-60'}`}
               >
-                <div className={`p-3 rounded-lg ${l.bgIcon} ${l.iconColor}`}>
-                  <l.icon size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">{l.title}</h4>
-                  <p className="text-sm text-slate-500 mt-1 leading-relaxed">{l.desc}</p>
-                </div>
+                <div className={`w-2 h-2 rounded-full`} style={{ backgroundColor: l.id === 'hw' ? '#1e293b' : l.border }}></div>
+                <span className="text-xs font-bold text-slate-700">{l.title}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* COLUMNA DERECHA: EL DIAGRAMA DE CÍRCULOS */}
-        <div className="flex-1 w-full max-w-[550px] relative">
-          <div className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 aspect-square relative flex items-center justify-center overflow-hidden">
+        {/* COLUMNA DERECHA: EL DIAGRAMA */}
+        <div className="flex-[1.5] w-full max-w-[480px] relative">
+          <div className="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-slate-100 p-6 aspect-square relative flex items-center justify-center">
             
-            <p className="absolute top-8 left-8 text-xs font-bold text-slate-400 tracking-widest uppercase">
-              Fig 1.1: Modelo de Capas
-            </p>
-
-            <svg viewBox="0 0 400 400" className="w-full h-full mt-6">
+            <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
               {layers.map((l) => (
-                <g key={l.id}>
+                <g key={l.id} className="transition-all duration-300">
                   <motion.circle
                     cx="200" cy="200" r={l.r}
                     fill={l.bg}
                     stroke={l.border}
-                    strokeWidth="1"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    whileHover={{ scale: 1.02, strokeWidth: 2 }}
+                    strokeWidth={activeLayer?.id === l.id ? "3" : "1"}
+                    animate={{ 
+                      scale: activeLayer?.id === l.id ? 1.03 : 1,
+                      opacity: activeLayer && activeLayer.id !== l.id ? 0.4 : 1 
+                    }}
                     onHoverStart={() => setActiveLayer(l)}
                     onHoverEnd={() => setActiveLayer(null)}
-                    className="cursor-pointer origin-center drop-shadow-sm"
+                    className="cursor-pointer origin-center"
                   />
-                  {/* Texto dentro del círculo */}
-                  {l.id === 'hw' ? (
-                    <text x="200" y="204" textAnchor="middle" fill={l.text} fontSize="11" fontWeight="bold" className="pointer-events-none tracking-widest">
-                      {l.name}
-                    </text>
-                  ) : (
-                    <text x="200" y={200 - l.r + 20} textAnchor="middle" fill={l.text} fontSize="12" fontWeight="600" className="pointer-events-none">
-                      {l.name}
-                    </text>
-                  )}
+                  <text x="200" y={l.id === 'hw' ? 205 : 200 - l.r + 20} textAnchor="middle" fill={l.text} fontSize="10" fontWeight="800" className="pointer-events-none uppercase tracking-tighter">
+                    {l.name}
+                  </text>
                 </g>
               ))}
             </svg>
 
-            {/* INFO CARD FLOTANTE */}
+            {/* INFO CARD FLOTANTE MEJORADA */}
             <AnimatePresence>
               {activeLayer && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                  className="absolute z-10 pointer-events-none bg-white/95 backdrop-blur-md border border-slate-100 p-5 rounded-2xl shadow-xl max-w-[260px]"
-                  style={{ top: '15%', right: '5%' }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  className="absolute -right-4 top-1/4 z-20 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl max-w-[200px]"
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <Info size={16} className="text-blue-500" />
-                    <h3 className="font-bold text-slate-900 text-sm">{activeLayer.title}</h3>
+                    <activeLayer.icon size={14} className="text-blue-400" />
+                    <h3 className="font-bold text-[11px] uppercase tracking-wider">{activeLayer.title}</h3>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">{activeLayer.desc}</p>
+                  <p className="text-[10px] text-slate-300 leading-tight">{activeLayer.desc}</p>
                 </motion.div>
               )}
             </AnimatePresence>
-
           </div>
-          <p className="text-center text-xs text-slate-400 mt-6 italic">
-            * Pasa el cursor sobre el diagrama o las tarjetas para explorar cada capa.
-          </p>
         </div>
-
       </div>
     </div>
   );

@@ -4,58 +4,7 @@ import OsLayers from '../../components/OsLayer.jsx';
 ---
 
 <MainLayout title="Capas del Sistema Operativo">
-  
-  <header class="mb-12">
-    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
-      <span class="w-8 h-[2px] bg-blue-600"></span>
-      Módulo 01: Fundamentos
-    </div>
-    <h1 class="text-5xl font-black text-slate-900 mb-6 tracking-tight">
-      Arquitectura del <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Sistema Operativo</span>
-    </h1>
-    <p class="text-xl text-slate-600 max-w-2xl leading-relaxed">
-      Antes de entender Docker, debemos entender sobre qué está parado. Un SO actúa como el director de orquesta entre el hardware y tus programas.
-    </p>
-  </header>
-
-  <section class="mb-16">
+  <div class="">
     <OsLayers client:load />
-  </section>
-
-  <section class="prose prose-slate prose-lg max-w-none border-t border-slate-200 pt-12">
-    <h2 class="text-3xl font-bold text-slate-900">¿Por qué es esto vital para los Contenedores?</h2>
-    
-    <div class="grid md:grid-cols-2 gap-8 not-prose mt-8">
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-        <h3 class="font-bold text-slate-900 flex items-center gap-2 mb-3">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
-          Máquinas Virtuales (VMs)
-        </h3>
-        <p class="text-slate-600 text-sm">
-          Duplican <strong>todo</strong> el SO (Hardware virtual + Kernel nuevo + Apps). Es pesado y lento porque cada VM tiene su propio Kernel "vestido".
-        </p>
-      </div>
-
-      <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm">
-        <h3 class="font-bold text-blue-900 flex items-center gap-2 mb-3">
-          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-          Contenedores (Docker)
-        </h3>
-        <p class="text-blue-800 text-sm">
-          Eliminan la duplicidad. <strong>Comparten el Kernel del Host</strong> y solo empaquetan el User Space. Son ligeros y arrancan en milisegundos.
-        </p>
-      </div>
-    </div>
-
-    <div class="bg-slate-900 text-white p-8 rounded-3xl mt-12 flex items-center justify-between">
-      <div>
-        <p class="text-blue-400 font-bold mb-1">Próximo paso</p>
-        <h4 class="text-xl font-bold">Virtualización vs. Contenerización</h4>
-      </div>
-      <a href="#" class="bg-white text-slate-900 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-colors">
-        Siguiente Lección →
-      </a>
-    </div>
-  </section>
-
+  </div>
 </MainLayout>
