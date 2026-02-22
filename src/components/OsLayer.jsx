@@ -35,7 +35,6 @@ export default function OsLayers() {
   const [activeLayer, setActiveLayer] = useState(null);
 
   return (
-    // CAMBIO: Eliminamos min-h-screen y p-8. Usamos h-full para llenar el slot de Astro.
     <div className="w-full h-full flex items-center justify-center font-sans">
       <div className="w-full flex flex-col lg:flex-row items-center gap-8">
         

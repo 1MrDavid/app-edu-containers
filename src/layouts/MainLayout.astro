@@ -1,7 +1,6 @@
 ---
-import '../styles/global.css';
-
-import { Terminal } from 'lucide-react';
+import '../styles/global.css'; 
+import { Terminal, Layers, Box } from 'lucide-react'; // Agregamos un par de iconos más
 
 const { title } = Astro.props;
 ---
@@ -11,33 +10,73 @@ const { title } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title} - Taller de Contenedores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   </head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <style is:global>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    /* Personalizar scrollbar para que sea minimalista */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 10px;
-    }
-  </style>
-  <body class="bg-slate-50 text-slate-900 flex h-screen overflow-hidden">
+  <body class="bg-slate-50 text-slate-900 flex h-screen w-screen overflow-hidden font-sans">
     
-    <aside class="w-64 bg-slate-900 text-white flex flex-col h-full border-r border-slate-700">
-      </aside>
+    <aside class="w-64 md:w-72 bg-[#0f172a] text-slate-300 flex flex-col h-full flex-shrink-0 border-r border-slate-800 shadow-2xl z-20">
+      
+      <div class="p-6 border-b border-slate-800/60 flex items-center gap-3">
+        <div class="bg-blue-500/10 p-2 rounded-xl text-blue-400">
+          <Terminal size={20} strokeWidth={2.5} />
+        </div>
+        <span class="font-extrabold text-white text-lg tracking-tight">Docker 101</span>
+      </div>
+      
+      <nav class="flex-1 overflow-y-auto py-8 px-4">
+        <div class="space-y-6">
+          <div>
+            <p class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">
+              Módulo 1: Capas del Sistema Operativo
+            </p>
+            <ul class="space-y-1">
+              <li>
+                <a href="/modulo-1/capas-so" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600/10 text-blue-400 font-semibold transition-all border border-blue-500/20">
+                  <Layers size={18} />
+                  1.1 Capas del SO
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800/50 hover:text-white text-slate-400 transition-colors border border-transparent">
+                  <Box size={18} />
+                  1.2 VMs vs Contenedores
+                </a>
+              </li>
+            </ul>
+            <p class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">
+              Módulo 2: Virtualización
+            </p>
+            <ul class="space-y-1">
+              <li>
+                <a href="/modulo-1/capas-so" 
+                class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600/10 text-blue-400 font-semibold transition-all border border-blue-500/20">
+                  <Layers size={18} />
+                  2.1 Virtualización
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800/50 hover:text-white text-slate-400 transition-colors border border-transparent">
+                  <Box size={18} />
+                  2.2 Maquinas Virtuales
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      <div class="p-6 border-t border-slate-800/60 text-xs font-medium text-slate-500 text-center">
+        David Diaz - Club Crecimiento Tecnológico 2026
+      </div>
+    </aside>
 
-    <main class="flex-1 h-full p-12 relative flex flex-col">
-      <div class="max-w-6xl mx-auto w-full h-full">
+    <main class="flex-1 h-full p-8 lg:p-12 relative flex flex-col min-w-0 min-h-0 bg-[#f8fafc]">
+      <div class="max-w-6xl mx-auto w-full h-full flex flex-col justify-center relative">
         <slot /> 
       </div>
     </main>
-</body>
+
+  </body>
 </html>
