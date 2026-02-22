@@ -1,17 +1,18 @@
 ---
-
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Inicio">
+  <div class="py-12 text-center">
+    <h1 class="text-5xl font-black text-slate-900 mb-6">Taller de Contenedores 🚀</h1>
+    <p class="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+      Bienvenido al material interactivo. Aquí exploraremos desde las capas del sistema operativo hasta la orquestación moderna.
+    </p>
+    <a 
+      href="/modulo-1/capas-so" 
+      class="inline-block bg-blue-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:bg-blue-700 transition-transform hover:-translate-y-1"
+    >
+      Empezar el taller
+    </a>
+  </div>
+</MainLayout>

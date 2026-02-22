@@ -1,0 +1,51 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import OsLayers from '../../components/OsLayer.jsx';
+---
+
+<MainLayout title="Capas del Sistema Operativo">
+  
+  <header class="mb-10">
+    <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Arquitectura del Sistema Operativo</h1>
+    <p class="text-xl text-slate-600">
+      Antes de entender Docker, debemos entender sobre qué está parado. ¿Qué es realmente "la máquina"?
+    </p>
+  </header>
+
+  <section class="prose prose-lg max-w-none text-slate-700">
+    <h2>1. La Máquina Desnuda vs. El Sistema Vestido</h2>
+    <p>
+      El término <em>máquina desnuda</em> se aplica a una computadora carente de sistema operativo. 
+      Por sí misma, una computadora es solo silicio capaz de repetir instrucciones a alta velocidad, 
+      pero incapaz de gestionar sus propios recursos de manera eficiente.
+    </p>
+
+    <div class="not-prose">
+      <OsLayers client:visible />
+    </div>
+
+    <h2>2. Funciones del Sistema Operativo</h2>
+    <p>
+      El sistema operativo (SO) actúa como un intermediario necesario. Se divide conceptualmente en capas para aislar la complejidad:
+    </p>
+    <ul>
+      <li>
+        <strong>El Kernel (Núcleo):</strong> Es el único con permiso para hablar con el hardware. 
+        Si un programa quiere escribir en disco, <em>debe</em> pedírselo al Kernel.
+      </li>
+      <li>
+        <strong>User Space (Espacio de Usuario):</strong> Aquí es donde corren tus programas (Navegador, VS Code, Python). 
+        Tienen acceso restringido y "creen" que tienen toda la memoria para ellos, pero es una ilusión creada por el SO.
+      </li>
+    </ul>
+
+    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6">
+      <p class="font-bold text-blue-900 m-0">💡 Reflexión para el taller:</p>
+      <p class="m-0 text-blue-800">
+        Cuando usamos máquinas virtuales, duplicamos todas las capas (Hardware virtual + Kernel nuevo + User Space). 
+        <strong>Los contenedores eliminan la duplicidad del Kernel</strong>, quedándose solo con el User Space aislado.
+      </p>
+    </div>
+  </section>
+
+</MainLayout>
